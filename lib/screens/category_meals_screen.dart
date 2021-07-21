@@ -14,6 +14,10 @@ class CategoryMealsScreen extends StatefulWidget {
   // CategoryMealsScreen(this.categoryId,this.categoryTitle);
   static const routeName = '/category-meals';
 
+  final List<Meal> availableMeals;
+
+  CategoryMealsScreen(this.availableMeals);
+
   @override
   _CategoryMealsScreenState createState() => _CategoryMealsScreenState();
 }
@@ -42,7 +46,7 @@ class _CategoryMealsScreenState extends State<CategoryMealsScreen> {
         'id']; //to get the id of the food type pressed by the user ->italian,quick easy etc
 
     //to filter the meals which have a particular category eg c1=> x,y,z
-    displayedMeals = DUMMY_MEALS.where((meal) {
+    displayedMeals = widget.availableMeals.where((meal) {
       return meal.categories.contains(
           categoryId); // meal.categories.contains(categoryId) returns true if it contains categoryId we selected
     }).toList();

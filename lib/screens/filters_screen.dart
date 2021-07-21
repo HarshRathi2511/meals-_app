@@ -7,15 +7,30 @@ class FiltersScreen extends StatefulWidget {
 
   static const String routeName = '/filters';
 
+  final Function saveFilters;
+  final Map<String,bool> currentFilters;
+
+  FiltersScreen(this.currentFilters,this.saveFilters);
+
   @override
   _FiltersScreenState createState() => _FiltersScreenState();
 }
 
 class _FiltersScreenState extends State<FiltersScreen> {
   var _glutenFree = false;
-  var _lactoseFree=false;
+  var _lactoseFree = false;
   var _vegetarian = false;
   var _vegan = false;
+  
+@override 
+initState()  //to initialise our switches to the currently matched filters 
+{
+  _glutenFree=widget.currentFilters['gluten'];
+  _lactoseFree=widget.currentFilters['lactose'];
+  _vegan=widget.currentFilters['vegan'];
+  _vegetarian=widget.currentFilters['vegetarian'];
+  super.initState();
+}
 
   Widget _buildSwitchListTile(
       {String title,
@@ -35,6 +50,22 @@ class _FiltersScreenState extends State<FiltersScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Filters'),
+        actions: [
+          IconButton(
+              icon: Icon(Icons.save),
+              onPressed: () {
+                final selectedFilters =   //this map is forwaded to the function saveFilters in the main 
+                  {
+                    'gluten': _glutenFree,  //setting values with what the user choose 
+                    'lactose': _lactoseFree,
+                    'vegan': _vegan,
+                    'vegetarian': _vegetarian,
+                  
+                };
+
+                widget.saveFilters(selectedFilters);
+              })
+        ],
       ),
       drawer: MainDrawer(),
       body: Column(children: [
@@ -47,7 +78,6 @@ class _FiltersScreenState extends State<FiltersScreen> {
         Expanded(
             child: ListView(
           children: [
-
             _buildSwitchListTile(
               title: 'GlutenFree',
               subTitle: 'Only Include Gluten Free Meals',
@@ -58,8 +88,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                 });
               },
             ),
-
-              _buildSwitchListTile(
+            _buildSwitchListTile(
               title: 'LactoseFree',
               subTitle: 'Only Include Lactose Free Meals',
               currentValue: _lactoseFree,
@@ -69,18 +98,17 @@ class _FiltersScreenState extends State<FiltersScreen> {
                 });
               },
             ),
-
-              _buildSwitchListTile(
+            _buildSwitchListTile(
               title: 'Vegetarian',
               subTitle: 'Only Include Vegetarian Meals',
               currentValue: _vegetarian,
               updateValue: (val) {
                 setState(() {
-                  _vegetarian= val;
+                  _vegetarian = val;
                 });
               },
             ),
-              _buildSwitchListTile(
+            _buildSwitchListTile(
               title: 'Vegan',
               subTitle: 'Only Include vegan Meals',
               currentValue: _vegan,
