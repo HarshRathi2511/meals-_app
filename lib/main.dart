@@ -27,6 +27,8 @@ class _MyAppState extends State<MyApp> {
   
   List<Meal>  _availableMeals=DUMMY_MEALS;
 
+  List <Meal> _favoriteMeals=[];
+
   void _setFilters (Map <String,bool> filterBoolData){//should be called inside a button and the user passes values in it 
     setState(() {
       _filters=filterBoolData;
@@ -54,6 +56,29 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  //function to add favoriets 
+  void _toggleFavorite(String mealId) //id of the meal which will turn into favorite or unfavorite 
+  {
+    final existingIndex=_favoriteMeals.indexWhere((meal)=>mealId==meal.id);  
+    //if the test returns true then the meal is already in the favorites list so we need to remove it .
+    if(existingIndex>=0){
+      setState(() {
+        _favoriteMeals.removeAt(existingIndex);
+      });
+    }
+    else{
+      setState(() {
+        _favoriteMeals.add(DUMMY_MEALS.firstWhere((meal) => mealId==meal.id)); //first meal with that id is added in that
+      });
+    }
+  }
+
+  bool _isMealFavorite(String id)
+  {
+    return _favoriteMeals.any((meal) =>id==meal.id); //stops after first element it found 
+    //true if it finds any element in that list 
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -77,11 +102,12 @@ class _MyAppState extends State<MyApp> {
 
       routes: {  //{Map<String, Widget Function(BuildContext)> routes = const <String, WidgetBuilder>{}}
 
-        '/': (ctx)=>TabsScreen(),  
+        '/': (ctx)=>TabsScreen(_favoriteMeals),  
         // '/category-meals': (ctx)=>CategoryMealsScreen(), //convention for paths having slash in the beginning 
         CategoryMealsScreen.routeName: (ctx)=>CategoryMealsScreen(_availableMeals), //to avoid mistakes 
-        MealDetailScreen.routeName: (ctx)=> MealDetailScreen(),
+        MealDetailScreen.routeName: (ctx)=> MealDetailScreen(_toggleFavorite,_isMealFavorite),
         FiltersScreen.routeName:(ctx)=>FiltersScreen(_filters,_setFilters),
+
 
       },
       // onGenerateRoute: (settings) { //dynamically assigned and used if routes are not named in the map

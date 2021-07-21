@@ -42,8 +42,7 @@ class _CategoryMealsScreenState extends State<CategoryMealsScreen> {
    }
     final routeArgs = ModalRoute.of(context).settings.arguments as Map<String, String>; //recievs the arguments(map) passed in pushNamed
      categoryTitle = routeArgs['title'];
-    final categoryId = routeArgs[
-        'id']; //to get the id of the food type pressed by the user ->italian,quick easy etc
+    final categoryId = routeArgs[ 'id']; //to get the id of the food type pressed by the user ->italian,quick easy etc
 
     //to filter the meals which have a particular category eg c1=> x,y,z
     displayedMeals = widget.availableMeals.where((meal) {
@@ -77,7 +76,7 @@ class _CategoryMealsScreenState extends State<CategoryMealsScreen> {
               duration: displayedMeals[index].duration,
               complexity: displayedMeals[index].complexity,
               affordability: displayedMeals[index].affordability,
-              removeItem: removeMeal,);
+              removeItem: null,);
                    
         },
         itemCount: displayedMeals.length,

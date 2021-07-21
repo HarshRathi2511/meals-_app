@@ -8,9 +8,9 @@ class FiltersScreen extends StatefulWidget {
   static const String routeName = '/filters';
 
   final Function saveFilters;
-  final Map<String,bool> currentFilters;
+  final Map<String, bool> currentFilters;
 
-  FiltersScreen(this.currentFilters,this.saveFilters);
+  FiltersScreen(this.currentFilters, this.saveFilters);
 
   @override
   _FiltersScreenState createState() => _FiltersScreenState();
@@ -21,16 +21,16 @@ class _FiltersScreenState extends State<FiltersScreen> {
   var _lactoseFree = false;
   var _vegetarian = false;
   var _vegan = false;
-  
-@override 
-initState()  //to initialise our switches to the currently matched filters 
-{
-  _glutenFree=widget.currentFilters['gluten'];
-  _lactoseFree=widget.currentFilters['lactose'];
-  _vegan=widget.currentFilters['vegan'];
-  _vegetarian=widget.currentFilters['vegetarian'];
-  super.initState();
-}
+
+  @override
+  initState() //to initialise our switches to the currently matched filters
+  {
+    _glutenFree = widget.currentFilters['gluten'];
+    _lactoseFree = widget.currentFilters['lactose'];
+    _vegan = widget.currentFilters['vegan'];
+    _vegetarian = widget.currentFilters['vegetarian'];
+    super.initState();
+  }
 
   Widget _buildSwitchListTile(
       {String title,
@@ -54,13 +54,13 @@ initState()  //to initialise our switches to the currently matched filters
           IconButton(
               icon: Icon(Icons.save),
               onPressed: () {
-                final selectedFilters =   //this map is forwaded to the function saveFilters in the main 
-                  {
-                    'gluten': _glutenFree,  //setting values with what the user choose 
-                    'lactose': _lactoseFree,
-                    'vegan': _vegan,
-                    'vegetarian': _vegetarian,
-                  
+                final selectedFilters = //this map is forwaded to the function saveFilters in the main
+                    {
+                  'gluten':
+                      _glutenFree, //setting values with what the user choose
+                  'lactose': _lactoseFree,
+                  'vegan': _vegan,
+                  'vegetarian': _vegetarian,
                 };
 
                 widget.saveFilters(selectedFilters);
@@ -118,6 +118,32 @@ initState()  //to initialise our switches to the currently matched filters
                 });
               },
             ),
+            SizedBox(height: 40),
+            ElevatedButton(
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.save,
+                      ),
+                      Text('Save Changes',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w900,
+                              fontSize: 30,
+                              color: Theme.of(context).accentColor))
+                    ]),
+                onPressed: () {
+                  final selectedFilters = //this map is forwaded to the function saveFilters in the main
+                      {
+                    'gluten':
+                        _glutenFree, //setting values with what the user choose
+                    'lactose': _lactoseFree,
+                    'vegan': _vegan,
+                    'vegetarian': _vegetarian,
+                  };
+
+                  widget.saveFilters(selectedFilters);
+                }),
           ],
         )),
       ]),
