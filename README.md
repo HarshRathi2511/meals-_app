@@ -1,6 +1,5 @@
-# meals_app
-
-A new Flutter project.
+# meals
+This app contains various recipes ,from which you can customize your choices like vegan,gluten etc.
 
 ![Screenshot_20210811-201151](https://user-images.githubusercontent.com/75066364/129052842-8cc79306-1f4f-4e8f-a30a-d0bc1918ef74.jpg)  ![Screenshot_20210811-201139](https://user-images.githubusercontent.com/75066364/129052866-bc361fe5-82b7-4242-b2ea-7e46c1d8c0bf.jpg)
 
